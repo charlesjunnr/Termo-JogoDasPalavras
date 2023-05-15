@@ -67,7 +67,7 @@ namespace JogoDasPalavras
         public Palavra()
         {
             this.palavraSorteada = ObterPalavraSecreta();
-            tentativas = 0;
+            tentativas = 1;
             letrasEncontradas = PopularLetrasEncontradas(palavraSorteada.Length);
             
         }
@@ -82,28 +82,9 @@ namespace JogoDasPalavras
             return letrasEncontradas;
         }
 
-        public bool JogadorAcertou(List<char> palpite)
+        public void ImplementarTentativas()
         {
-            bool letraFoiEncontrada = false;
-
-            for(int i = 0; i < palavraSorteada.Length; i++)
-            {
-                if (VerificaLetraSeIgualSemConsiderarAcento(palpite[i], palavraSorteada.ToUpper()[i]))
-                {
-                    letrasEncontradas[i] = palpite[i];
-                    letraFoiEncontrada = true;
-                }
-            }
-
-            if(letraFoiEncontrada == false)
-            {
-                
-            }
-            bool jogadorAcertou = new string(letrasEncontradas) == palavraSorteada;
-            
             tentativas++;
-
-            return jogadorAcertou;
         }
         public bool ValidarPalavras(string palpiteJogador)
         {
@@ -122,10 +103,10 @@ namespace JogoDasPalavras
         }
         private string ObterPalavraSecreta()
         {
-            
-            int indiceAleatorio = new Random().Next(palavrasParaSortear.Count);
+            return "tédio";
+            //int indiceAleatorio = new Random().Next(palavrasParaSortear.Count);
 
-            return palavrasParaSortear[indiceAleatorio];
+            //return palavrasParaSortear[indiceAleatorio];
         }
 
         private bool VerificaLetraSeIgualSemConsiderarAcento(char letra1, char letra2)

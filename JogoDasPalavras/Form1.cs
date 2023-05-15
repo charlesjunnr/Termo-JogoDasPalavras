@@ -1,5 +1,6 @@
 using System.Globalization;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace JogoDasPalavras
 {
@@ -7,23 +8,41 @@ namespace JogoDasPalavras
     {
         private Palavra palavra;
 
+        RichTextBox textBoxAtual = new RichTextBox();
+
+        List<RichTextBox> listaEscritaTela = new List<RichTextBox>();
+
+        int tagAtual = 1;
+
+        int j = 0;
+
         public List<char> palpiteFinal = new List<char>();
         public Form1()
         {
             InitializeComponent();
 
-            RegistrarEventos();
-
             palavra = new Palavra();
+
+            RegistrarEventos();
 
         }
         private void RegistrarEventos()
         {
+     
             foreach (Button botao in pnlBotoes.Controls)
             {
                 botao.Click += DarPalpite;
             }
         }
+
+        //private void AlterarCaixa(object? sender, EventArgs e)
+        //{
+
+        //    textBoxAtual = listaEscritaTela[j];
+
+        //    textBoxAtual.Focus();
+        //}
+
         public void DarPalpite(object sender, EventArgs e)
         {
             Button botaoClicado = (Button)sender;
@@ -33,17 +52,17 @@ namespace JogoDasPalavras
                 char palpite = botaoClicado.Text[0];
 
                 palpiteFinal.Add(palpite);
+
             }
 
             int i = 0;
+
             i = VerificarPalpite(i);
         }
         private int VerificarPalpite(int i)
         {
             if (palpiteFinal.Count == 5)
             {
-                palavra.JogadorAcertou(palpiteFinal);
-
                 palpiteFinal.ToArray();
 
                 string palavraGerada = palavra.palavraSorteada;
@@ -62,7 +81,7 @@ namespace JogoDasPalavras
                         }
                         else if (palavraGerada.ToString().ToUpper().Contains(palpiteFinal[i]))
                         {
-                            richTextBox.BackColor = Color.Yellow;
+                            richTextBox.BackColor = Color.Cyan;
                         }
                         else
                         {
@@ -73,6 +92,10 @@ namespace JogoDasPalavras
                 }
 
                 VerificarVitoria(palavraGerada, palpiteJogador);
+
+                palavra.ImplementarTentativas();
+
+
 
                 palpiteFinal.Clear();
             }
@@ -103,16 +126,12 @@ namespace JogoDasPalavras
         }
         private void buttonEnter_Click(object sender, EventArgs e)
         {
-            palpiteFinal.Clear();
 
-            foreach (RichTextBox richTextBox in tblTentativas.Controls)
-            {
-                if (richTextBox.Tag.ToString() == palavra.Tentativas.ToString())
-                {
-                    palpiteFinal.Add(richTextBox.Text[0]);
-                }
+        }
 
-            }
+        private void buttonN_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
